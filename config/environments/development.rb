@@ -25,5 +25,15 @@ LearningDevise::Application.configure do
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
-  config.assets.debug = true
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default :charset => "utf-8"
+  ActionMailer::Base.smtp_settings = {
+  :address              => "smtp.gmail.com",
+  :port                 => 587,
+  :user_name            => "montylennie@gmail.com",
+  :password             => 'MON007007T15Y20',
+  :authentication       => "plain",
+  :enable_starttls_auto => true
+  }
 end

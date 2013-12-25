@@ -10,6 +10,6 @@ class UserController < ApplicationController
   private
 
   	def user_params
-  		params.require(:user).permit(:signin)
+  		params.require(:user).permit(:login)
   	end
 end
