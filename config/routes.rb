@@ -1,4 +1,6 @@
 LearningDevise::Application.routes.draw do
+  resources :posts
+
   get "registrations/update"
   get "home/index"
   devise_for :users, :controllers => { :registrations => "registrations" }

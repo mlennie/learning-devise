@@ -1,9 +1,11 @@
 class User < ActiveRecord::Base
+  has_many :posts
+  has_many :collaborations
 	validates :username, :uniqueness => { :case_sensitive => false }
   # Include default devise modules. Others available are:
-  # :lockable, :timeoutable and :omniauthable
+  # :lockable, :timeoutable and :omniauthable, :confirmable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable
   attr_accessor :login
 
   def self.find_first_by_auth_conditions(warden_conditions)
