@@ -3,8 +3,8 @@ class User < ActiveRecord::Base
   has_many :collaborations
 	validates :username, :uniqueness => { :case_sensitive => false }
   # Include default devise modules. Others available are:
-  # :lockable, :timeoutable and :omniauthable, :confirmable
-  devise :database_authenticatable, :registerable,
+  # :lockable, :timeoutable and, :confirmable
+  devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
   attr_accessor :login
 
@@ -14,6 +14,14 @@ class User < ActiveRecord::Base
       where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
     else
       where(conditions).first
+    end
+  end
+
+  def self.process_omniauth(auth)
+    where(auth.slice(:provider, :uid)).first_or_create do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.username = auth.info.nickname
     end
   end
 end
